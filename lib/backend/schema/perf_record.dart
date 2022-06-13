@@ -19,13 +19,17 @@ abstract class PerfRecord implements Built<PerfRecord, PerfRecordBuilder> {
   bool get onoff;
 
   @nullable
+  String get imgperf;
+
+  @nullable
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference get reference;
 
   static void _initializeBuilder(PerfRecordBuilder builder) => builder
     ..nome = ''
     ..bio = ''
-    ..onoff = false;
+    ..onoff = false
+    ..imgperf = '';
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('perf');
@@ -51,10 +55,12 @@ Map<String, dynamic> createPerfRecordData({
   String nome,
   String bio,
   bool onoff,
+  String imgperf,
 }) =>
     serializers.toFirestore(
         PerfRecord.serializer,
         PerfRecord((p) => p
           ..nome = nome
           ..bio = bio
-          ..onoff = onoff));
+          ..onoff = onoff
+          ..imgperf = imgperf));

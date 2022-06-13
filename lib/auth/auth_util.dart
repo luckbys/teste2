@@ -167,10 +167,10 @@ Future verifySmsCode({
 }
 
 DocumentReference get currentUserReference => currentUser?.user != null
-    ? UsuarioRecord.collection.doc(currentUser.user.uid)
+    ? UsersRecord.collection.doc(currentUser.user.uid)
     : null;
 
-UsuarioRecord currentUserDocument;
+UsersRecord currentUserDocument;
 final authenticatedUserStream = FirebaseAuth.instance
     .authStateChanges()
     .map<String>((user) {
@@ -180,10 +180,13 @@ final authenticatedUserStream = FirebaseAuth.instance
       }();
       return user?.uid ?? '';
     })
-    .switchMap((uid) => queryUsuarioRecord(
-        queryBuilder: (user) => user.where('uid', isEqualTo: uid),
-        singleRecord: true))
-    .map((users) => currentUserDocument = users.isNotEmpty ? users.first : null)
+    .switchMap(
+      (uid) => uid.isEmpty
+          ? Stream.value(null)
+          : UsersRecord.getDocument(UsersRecord.collection.doc(uid))
+              .handleError((_) {}),
+    )
+    .map((user) => currentUserDocument = user)
     .asBroadcastStream();
 
 class AuthUserStreamWidget extends StatelessWidget {

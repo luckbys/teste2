@@ -1,4 +1,5 @@
 import '../auth/auth_util.dart';
+import '../criaperf/criaperf_widget.dart';
 import '../criarperfil/criarperfil_widget.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -39,11 +40,11 @@ class _TesteWidgetState extends State<TesteWidget> {
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height * 1,
         decoration: BoxDecoration(
-          color: Color(0xFFEEEEEE),
+          color: FlutterFlowTheme.of(context).black600,
           image: DecorationImage(
             fit: BoxFit.cover,
             image: Image.asset(
-              'assets/images/Design_sem_nome_(4).png',
+              'assets/images/backgroundcolor.png',
             ).image,
           ),
         ),
@@ -59,12 +60,12 @@ class _TesteWidgetState extends State<TesteWidget> {
                   padding: EdgeInsetsDirectional.fromSTEB(0, 70, 0, 90),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Image.asset(
-                        'assets/images/logoRobin@3x.png',
-                        width: 242,
-                        height: 60,
+                        'assets/images/Logotipo_Tecnologia_e_Gaming_Moderno_Verde.png',
+                        width: 150,
+                        height: 100,
                         fit: BoxFit.cover,
                       ),
                     ],
@@ -81,6 +82,7 @@ class _TesteWidgetState extends State<TesteWidget> {
                           controller: emailAddressController,
                           obscureText: false,
                           decoration: InputDecoration(
+                            labelText: 'Email Address',
                             labelStyle:
                                 FlutterFlowTheme.of(context).bodyText1.override(
                                       fontFamily: 'Lexend Deca',
@@ -137,6 +139,7 @@ class _TesteWidgetState extends State<TesteWidget> {
                           controller: passwordController,
                           obscureText: !passwordVisibility,
                           decoration: InputDecoration(
+                            labelText: 'Password',
                             labelStyle:
                                 FlutterFlowTheme.of(context).bodyText1.override(
                                       fontFamily: 'Lexend Deca',
@@ -212,12 +215,14 @@ class _TesteWidgetState extends State<TesteWidget> {
                             return;
                           }
 
-                          await Navigator.pushAndRemoveUntil(
+                          await Navigator.push(
                             context,
-                            MaterialPageRoute(
-                              builder: (context) => CriarperfilWidget(),
+                            PageTransition(
+                              type: PageTransitionType.fade,
+                              duration: Duration(milliseconds: 2),
+                              reverseDuration: Duration(milliseconds: 2),
+                              child: CriarperfilWidget(),
                             ),
-                            (r) => false,
                           );
                         },
                         text: 'Login',
@@ -311,7 +316,7 @@ class _TesteWidgetState extends State<TesteWidget> {
                                 await Navigator.pushAndRemoveUntil(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => CriarperfilWidget(),
+                                    builder: (context) => CriaperfWidget(),
                                   ),
                                   (r) => false,
                                 );
@@ -348,7 +353,7 @@ class _TesteWidgetState extends State<TesteWidget> {
                               await Navigator.pushAndRemoveUntil(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => CriarperfilWidget(),
+                                  builder: (context) => CriaperfWidget(),
                                 ),
                                 (r) => false,
                               );
@@ -376,37 +381,38 @@ class _TesteWidgetState extends State<TesteWidget> {
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        'Don\'t have an account?',
-                        style: FlutterFlowTheme.of(context).bodyText1.override(
-                              fontFamily: 'Lexend Deca',
-                              color: Colors.white,
-                              fontSize: 14,
-                              fontWeight: FontWeight.normal,
+                      Expanded(
+                        child: FFButtonWidget(
+                          onPressed: () async {
+                            await Navigator.push(
+                              context,
+                              PageTransition(
+                                type: PageTransitionType.fade,
+                                duration: Duration(milliseconds: 0),
+                                reverseDuration: Duration(milliseconds: 0),
+                                child: CriaperfWidget(),
+                              ),
+                            );
+                          },
+                          text: 'Criar conta',
+                          options: FFButtonOptions(
+                            width: 90,
+                            height: 30,
+                            color: Color(0x00FFFFFF),
+                            textStyle:
+                                FlutterFlowTheme.of(context).subtitle2.override(
+                                      fontFamily: 'Lexend Deca',
+                                      color: Colors.black,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                            elevation: 0,
+                            borderSide: BorderSide(
+                              color: Colors.transparent,
+                              width: 1,
                             ),
-                      ),
-                      FFButtonWidget(
-                        onPressed: () {
-                          print('Button pressed ...');
-                        },
-                        text: 'Register',
-                        options: FFButtonOptions(
-                          width: 90,
-                          height: 30,
-                          color: Color(0x00FFFFFF),
-                          textStyle:
-                              FlutterFlowTheme.of(context).subtitle2.override(
-                                    fontFamily: 'Lexend Deca',
-                                    color: Color(0xFF39D2C0),
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                          elevation: 0,
-                          borderSide: BorderSide(
-                            color: Colors.transparent,
-                            width: 1,
+                            borderRadius: 0,
                           ),
-                          borderRadius: 0,
                         ),
                       ),
                     ],

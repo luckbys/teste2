@@ -86,14 +86,14 @@ class _MyAppState extends State<MyApp> {
               child: SizedBox(
                 width: 50,
                 height: 50,
-                child: SpinKitChasingDots(
+                child: SpinKitRotatingPlain(
                   color: Color(0xE8E93727),
                   size: 50,
                 ),
               ),
             )
           : currentUser.loggedIn
-              ? CriarperfilWidget()
+              ? CriaperfWidget()
               : TesteWidget(),
     );
   }

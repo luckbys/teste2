@@ -51,6 +51,7 @@ abstract class FlutterFlowTheme {
   Color platinum;
   Color ashGray;
   Color darkSeaGreen;
+  Color customColor1;
 
   TextStyle get title1 => GoogleFonts.getFont(
         'Poppins',
@@ -119,6 +120,7 @@ class LightModeTheme extends FlutterFlowTheme {
   Color platinum = Color(0xFFEBEBEB);
   Color ashGray = Color(0xFFCAD2C5);
   Color darkSeaGreen = Color(0xFF84A98C);
+  Color customColor1 = Color(0xFF2FB73C);
 }
 
 class DarkModeTheme extends FlutterFlowTheme {
@@ -144,6 +146,7 @@ class DarkModeTheme extends FlutterFlowTheme {
   Color platinum = Color(0xFFEBEBEB);
   Color ashGray = Color(0xFFCAD2C5);
   Color darkSeaGreen = Color(0xFF84A98C);
+  Color customColor1 = Color(0xFF452FB7);
 }
 
 extension TextStyleHelper on TextStyle {

@@ -1,11 +1,6 @@
-import '../auth/auth_util.dart';
 import '../backend/backend.dart';
-import '../flutter_flow/flutter_flow_animations.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
-import '../flutter_flow/flutter_flow_widgets.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -17,42 +12,8 @@ class CriarperfilWidget extends StatefulWidget {
   _CriarperfilWidgetState createState() => _CriarperfilWidgetState();
 }
 
-class _CriarperfilWidgetState extends State<CriarperfilWidget>
-    with TickerProviderStateMixin {
-  TextEditingController bioController;
-  TextEditingController nomeController;
-  bool switchListTileValue;
+class _CriarperfilWidgetState extends State<CriarperfilWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  final animationsMap = {
-    'buttonOnActionTriggerAnimation': AnimationInfo(
-      curve: Curves.bounceOut,
-      trigger: AnimationTrigger.onActionTrigger,
-      duration: 600,
-      initialState: AnimationState(
-        offset: Offset(0, 0),
-        scale: 1,
-        opacity: 0,
-      ),
-      finalState: AnimationState(
-        offset: Offset(0, 0),
-        scale: 1,
-        opacity: 1,
-      ),
-    ),
-  };
-
-  @override
-  void initState() {
-    super.initState();
-    setupTriggerAnimations(
-      animationsMap.values
-          .where((anim) => anim.trigger == AnimationTrigger.onActionTrigger),
-      this,
-    );
-
-    bioController = TextEditingController();
-    nomeController = TextEditingController();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,202 +23,162 @@ class _CriarperfilWidgetState extends State<CriarperfilWidget>
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(5, 5, 5, 5),
-                    child: Text(
-                      'Nome:',
-                      style: FlutterFlowTheme.of(context).title3,
-                    ),
-                  ),
-                ],
+          child: Container(
+            width: 400,
+            height: double.infinity,
+            decoration: BoxDecoration(
+              color: Color(0xFFEEEEEE),
+              image: DecorationImage(
+                fit: BoxFit.cover,
+                image: Image.asset(
+                  'assets/images/backgroundcolor.png',
+                ).image,
               ),
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Expanded(
-                    child: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(15, 15, 15, 15),
-                      child: Container(
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          color: FlutterFlowTheme.of(context).textColor,
-                          borderRadius: BorderRadius.circular(10),
-                          shape: BoxShape.rectangle,
-                        ),
-                        child: TextFormField(
-                          controller: nomeController,
-                          onChanged: (_) => EasyDebounce.debounce(
-                            'nomeController',
-                            Duration(milliseconds: 2000),
-                            () => setState(() {}),
-                          ),
-                          autofocus: true,
-                          obscureText: false,
-                          decoration: InputDecoration(
-                            enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Color(0x00000000),
-                                width: 1,
-                              ),
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(4.0),
-                                topRight: Radius.circular(4.0),
-                              ),
-                            ),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Color(0x00000000),
-                                width: 1,
-                              ),
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(4.0),
-                                topRight: Radius.circular(4.0),
-                              ),
-                            ),
-                            contentPadding:
-                                EdgeInsetsDirectional.fromSTEB(5, 5, 5, 5),
-                          ),
-                          style: FlutterFlowTheme.of(context).bodyText1,
-                          keyboardType: TextInputType.name,
-                        ),
-                      ),
+              shape: BoxShape.rectangle,
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                  child: StreamBuilder<List<PerfRecord>>(
+                    stream: queryPerfRecord(
+                      singleRecord: true,
                     ),
-                  ),
-                ],
-              ),
-              Column(
-                mainAxisSize: MainAxisSize.max,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(5, 5, 5, 5),
-                    child: Text(
-                      'Solicitação:',
-                      style: FlutterFlowTheme.of(context).title3,
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(15, 15, 15, 15),
-                    child: Container(
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: FlutterFlowTheme.of(context).textColor,
-                      ),
-                      child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(5, 5, 5, 5),
-                        child: TextFormField(
-                          controller: bioController,
-                          onChanged: (_) => EasyDebounce.debounce(
-                            'bioController',
-                            Duration(milliseconds: 2000),
-                            () => setState(() {}),
-                          ),
-                          autofocus: true,
-                          obscureText: false,
-                          decoration: InputDecoration(
-                            hintText: '[Some hint text...]',
-                            enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Color(0x00000000),
-                                width: 1,
-                              ),
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(4.0),
-                                topRight: Radius.circular(4.0),
-                              ),
-                            ),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Color(0x00000000),
-                                width: 1,
-                              ),
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(4.0),
-                                topRight: Radius.circular(4.0),
-                              ),
+                    builder: (context, snapshot) {
+                      // Customize what your widget looks like when it's loading.
+                      if (!snapshot.hasData) {
+                        return Center(
+                          child: SizedBox(
+                            width: 50,
+                            height: 50,
+                            child: SpinKitRotatingPlain(
+                              color: Color(0xE8E93727),
+                              size: 50,
                             ),
                           ),
-                          style: FlutterFlowTheme.of(context).bodyText1,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Expanded(
-                    child: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(15, 15, 15, 15),
-                      child: SwitchListTile(
-                        value: switchListTileValue ??= true,
-                        onChanged: (newValue) =>
-                            setState(() => switchListTileValue = newValue),
-                        title: Text(
-                          'Title',
-                          style: FlutterFlowTheme.of(context).title3,
-                        ),
-                        subtitle: Text(
-                          'Subtitle',
-                          style: FlutterFlowTheme.of(context).subtitle2,
-                        ),
-                        tileColor: FlutterFlowTheme.of(context).gray600,
-                        dense: false,
-                        controlAffinity: ListTileControlAffinity.trailing,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(20, 20, 20, 20),
-                child: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    FFButtonWidget(
-                      onPressed: () async {
-                        final perfCreateData = createPerfRecordData(
-                          bio: bioController.text,
-                          nome: nomeController.text,
-                          onoff: switchListTileValue,
                         );
-                        await PerfRecord.collection.doc().set(perfCreateData);
-                        await (animationsMap['buttonOnActionTriggerAnimation']
-                                .curvedAnimation
-                                .parent as AnimationController)
-                            .forward(from: 0.0);
-                      },
-                      text: 'Button',
-                      options: FFButtonOptions(
-                        width: 130,
-                        height: 40,
-                        color: FlutterFlowTheme.of(context).primaryColor,
-                        textStyle:
-                            FlutterFlowTheme.of(context).subtitle2.override(
-                                  fontFamily: 'Poppins',
-                                  color: Colors.white,
-                                ),
-                        borderSide: BorderSide(
-                          color: Colors.transparent,
-                          width: 1,
-                        ),
-                        borderRadius: 12,
-                      ),
-                    ).animated(
-                        [animationsMap['buttonOnActionTriggerAnimation']]),
-                  ],
+                      }
+                      List<PerfRecord> textPerfRecordList = snapshot.data;
+                      // Return an empty Container when the document does not exist.
+                      if (snapshot.data.isEmpty) {
+                        return Container();
+                      }
+                      final textPerfRecord = textPerfRecordList.isNotEmpty
+                          ? textPerfRecordList.first
+                          : null;
+                      return Text(
+                        textPerfRecord.nome,
+                        style: FlutterFlowTheme.of(context).bodyText1.override(
+                              fontFamily: 'Poppins',
+                              color:
+                                  FlutterFlowTheme.of(context).primaryBtnText,
+                              fontSize: 20,
+                            ),
+                      );
+                    },
+                  ),
                 ),
-              ),
-            ],
+                StreamBuilder<List<PerfRecord>>(
+                  stream: queryPerfRecord(
+                    singleRecord: true,
+                  ),
+                  builder: (context, snapshot) {
+                    // Customize what your widget looks like when it's loading.
+                    if (!snapshot.hasData) {
+                      return Center(
+                        child: SizedBox(
+                          width: 50,
+                          height: 50,
+                          child: SpinKitRotatingPlain(
+                            color: Color(0xE8E93727),
+                            size: 50,
+                          ),
+                        ),
+                      );
+                    }
+                    List<PerfRecord> imagePerfRecordList = snapshot.data;
+                    // Return an empty Container when the document does not exist.
+                    if (snapshot.data.isEmpty) {
+                      return Container();
+                    }
+                    final imagePerfRecord = imagePerfRecordList.isNotEmpty
+                        ? imagePerfRecordList.first
+                        : null;
+                    return Image.network(
+                      imagePerfRecord.imgperf,
+                      width: 100,
+                      height: 100,
+                      fit: BoxFit.cover,
+                    );
+                  },
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
+                    child: DefaultTabController(
+                      length: 3,
+                      initialIndex: 0,
+                      child: Column(
+                        children: [
+                          TabBar(
+                            labelColor:
+                                FlutterFlowTheme.of(context).primaryBtnText,
+                            labelStyle: FlutterFlowTheme.of(context).bodyText1,
+                            indicatorColor:
+                                FlutterFlowTheme.of(context).secondaryColor,
+                            tabs: [
+                              Tab(
+                                text: 'Posts',
+                              ),
+                              Tab(
+                                text: 'Fotos',
+                              ),
+                              Tab(
+                                text: 'Eventos',
+                              ),
+                            ],
+                          ),
+                          Expanded(
+                            child: TabBarView(
+                              children: [
+                                Text(
+                                  'Tab View 1',
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyText1
+                                      .override(
+                                        fontFamily: 'Poppins',
+                                        fontSize: 32,
+                                      ),
+                                ),
+                                Text(
+                                  'Tab View 2',
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyText1
+                                      .override(
+                                        fontFamily: 'Poppins',
+                                        fontSize: 32,
+                                      ),
+                                ),
+                                Text(
+                                  'Tab View 3',
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyText1
+                                      .override(
+                                        fontFamily: 'Poppins',
+                                        fontSize: 32,
+                                      ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
